@@ -12,10 +12,15 @@
                     <ul class="navbar-nav">
                         {{-- タスクの追加 --}}
                         <li class="nav-item">{!! link_to_route('tasks.create','タスクの追加',[],['class'=>'nav-link']); !!}</li>
-                        {{-- ユーザ登録ページへのリンク --}}
-                        <li>{!! link_to_route('signup.get', 'Signup', [], ['class' => 'nav-link']) !!}</li>
-                        {{-- ログインページへのリンク --}}
-                        <li><a href="#">Login</a></li>
+                        @if(Auth::check())
+                            {{-- ログアウトへのリンク --}}
+                            <li class="nav-item">{!! link_to_route('logout.get','Logout',[],['class'=>'nav-link']) !!}</li>
+                        @else
+                            {{-- ユーザ登録ページへのリンク --}}
+                            <li class="nav-item">{!! link_to_route('signup.get', 'Signup', [], ['class' => 'nav-link']) !!}</li>
+                            {{-- ログインページへのリンク --}}
+                            <li class="nav-item">{!! link_to_route('login', 'Login', [], ['class' => 'nav-link']) !!}</li>
+                        @endif
                     </ul>
                 </div>
             </nav>
