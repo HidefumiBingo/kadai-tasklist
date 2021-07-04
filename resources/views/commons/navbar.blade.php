@@ -10,9 +10,9 @@
                 <div class="collapse navbar-collapse" id="nav-bar">
                     <ul class="navbar-nav mr-auto"></ul>
                     <ul class="navbar-nav">
-                        {{-- タスクの追加 --}}
-                        <li class="nav-item">{!! link_to_route('tasks.create','タスクの追加',[],['class'=>'nav-link']); !!}</li>
                         @if(Auth::check())
+                            {{-- タスクの追加 --}}
+                            <li class="nav-item">{!! link_to_route('tasks.create','タスクの追加',[],['class'=>'nav-link']); !!}</li>
                             {{-- ログアウトへのリンク --}}
                             <li class="nav-item">{!! link_to_route('logout.get','Logout',[],['class'=>'nav-link']) !!}</li>
                         @else
