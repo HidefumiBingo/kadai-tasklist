@@ -8,6 +8,7 @@ use App\Task;
 
 class TasksController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -30,7 +31,7 @@ class TasksController extends Controller
         return view('tasks.index',$data);
         
     }
-
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -81,13 +82,24 @@ class TasksController extends Controller
      */
     public function show($id)
     {
-        if(\Auth::check()) {
-            $task = Task::findOrFail($id);
-            return view('tasks.show',['task'=>$task,]);
-        } else {
-            return redirect('/');
-        }
+        // $task = Task::findOrFail($id);
+        // return view('tasks.show',['task'=>$task]);
+       
+        // return redirect('/');
         
+        
+        $task = Task::findOrFail($id);
+        $user = \Auth::user();
+        // dd($task);
+        
+        //$userがNULL（未ログイン）の場合の確認
+        if(!empty($user)) {
+            //ログイン中のユーザーのidとタスクのuser_idの一致を確認
+            if($task->user_id === $user->id) {
+                return view('tasks.show',['task'=>$task]);
+            } 
+        }
+        return redirect('/');
     }
 
     /**
@@ -99,8 +111,16 @@ class TasksController extends Controller
     public function edit($id)
     {
         $task = Task::findOrFail($id);
+        $user = \Auth::user();
         
-        return view('tasks.edit',['task'=>$task]);
+        if(!empty($user)) {
+            if($task->user_id === $user->id) {
+                return view('tasks.edit',['task'=>$task]);
+            }
+        }
+        return redirect('/');
+        
+        // return view('tasks.edit',['task'=>$task]);
     }
 
     /**
